@@ -1,71 +1,74 @@
 /**
  * Refactor onderstaande naar een class.
  */
-function Pixel(x = 0, y = 0) {
-  this.x = x;
-  this.y = y;
-  this._id = Math.random();
-}
+class Pixel {
+  constructor(x = 0, y = 0){
+    this.x = x;
+    this.y = y;
+    this._id = Math.random();
+  }
+  
+  distance(p) {
+    const { pow, sqrt } = Math;
+    return sqrt(pow(this.x - p.x, 2) + pow(this.y - p.y, 2));
+  }
 
-Pixel.prototype.distance = function(p) {
-  const { pow, sqrt } = Math;
-  return sqrt(pow(this.x - p.x, 2) + pow(this.y - p.y, 2));
-};
+  midpoint(p) {
+    const x = (this.x + p.x) / 2.0;
+    const y = (this.y + p.y) / 2.0;
+    return Pixel.fromObj({ x, y });
+  }
 
-Pixel.prototype.midpoint = function(p) {
-  const x = (this.x + p.x) / 2.0;
-  const y = (this.y + p.y) / 2.0;
-  return Pixel.fromObj({ x, y });
-};
+  toString() {
+    return `${this.id}: (x: ${this.x}, y: ${this.y})`;
+  }
 
-Pixel.prototype.toString = function() {
-  return `${this.id}: (x: ${this.x}, y: ${this.y})`;
-};
+  static fromObj(obj) {
+    const p = new Pixel(obj.x, obj.y);
+    return p;
+  }
 
-Pixel.fromObj = function(obj) {
-  const p = new Pixel(obj.x, obj.y);
-  return p;
-};
-
-Object.defineProperty(Pixel.prototype, "id", {
-  get() {
+  get id() {
     return this._id;
-  },
-  set(val) {
+  }
+
+  set id(val) {
     this._id = val;
   }
-});
-
-function Voxel(x, y, z = 0) {
-  Pixel.call(this, x, y);
-  this.z = z;
 }
 
-Voxel.prototype = Object.create(Pixel.prototype);
+let pixel = new Pixel();
 
-Voxel.prototype.distance = function(v) {
-  const deltaX = this.x - v.x;
-  const deltaY = this.y - v.y;
-  const deltaZ = this.z - v.z;
+class Voxel extends Pixel {
+  constructor(x, y, z = 0) {
+    super(x, y);
+    this.z = z;
+  }
 
-  const { pow, sqrt } = Math;
-  return sqrt(pow(deltaX, 2) + pow(deltaY, 2) + pow(deltaZ, 2));
-};
+  distance(v) {
+    const deltaX = this.x - v.x;
+    const deltaY = this.y - v.y;
+    const deltaZ = this.z - v.z;
 
-Voxel.prototype.midpoint = function(v) {
-  const midX = (this.x + v.x) / 2.0;
-  const midY = (this.y + v.y) / 2.0;
-  const midZ = (this.z + v.z) / 2.0;
-  return Voxel.fromObj({ x: midX, y: midY, z: midZ });
-};
+    const { pow, sqrt } = Math;
+    return sqrt(pow(deltaX, 2) + pow(deltaY, 2) + pow(deltaZ, 2));
+  }
 
-Voxel.prototype.toString = function() {
-  return `${this.id}: (x: ${this.x}, y: ${this.y}, z: ${this.z})`;
-};
+  midpoint(v) {
+    const midX = (this.x + v.x) / 2.0;
+    const midY = (this.y + v.y) / 2.0;
+    const midZ = (this.z + v.z) / 2.0;
+    return Voxel.fromObj({ x: midX, y: midY, z: midZ });
+  }
 
-Voxel.fromObj = function(obj) {
-  return new Voxel(obj.x, obj.y, obj.z);
-};
+  toString() {
+    return `${this.id}: (x: ${this.x}, y: ${this.y}, z: ${this.z})`;
+  }
+
+  static fromObj(obj) {
+    return new Voxel(obj.x, obj.y, obj.z);
+  }
+}
 
 // Herwerk onderstaande functies naar arrow functions. Zorg ervoor dat het resultaat voor en na herwerken hetzelfde is.
 function testDistance() {
