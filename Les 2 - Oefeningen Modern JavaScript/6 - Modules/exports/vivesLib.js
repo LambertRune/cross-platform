@@ -11,3 +11,5 @@ const myObject = {
   y: 2,
   z: 3
 };
+
+export { firstFunction, secondFunction, myObject };

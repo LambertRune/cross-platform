@@ -1,9 +1,12 @@
 /**
  * Gebruik een ES2015 class om een Person object aan te maken.
  */
-function Person(firstname, lastname) {
-  this.fname = firstname;
-  this.lname = lastname;
+class Person{
+  constructor (fname, lname){
+    this.fname = fname
+    this.lname = lname
+  }
+
 }
 
 const john = new Person("John", "Doe");

@@ -8,7 +8,7 @@ const profile = {
 }
 
 // verander de volgende twee lijnen
-const first_name = profile.first_name;
-const last_name = profile.last_name;
+
+const { first_name, last_name } = profile
 
 console.log(first_name, last_name);

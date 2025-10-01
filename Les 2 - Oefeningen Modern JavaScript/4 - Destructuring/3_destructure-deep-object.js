@@ -10,8 +10,7 @@ const profile = {
 };
 
 // verander volgende twee lijnen naar één lijn
-const twitter = profile.social.twitter;
-const linkedin = profile.social.linkedin;
+const { twitter, linkedin } = profile
 
 console.log(twitter, linkedin);
 
@@ -27,10 +26,7 @@ function getAverageTemp() {
   }
   
   // verander volgende vier lijnen naar één lijn
-  const maxToday = weather.today.max;
-  const minToday = weather.today.min;
-  const maxTomorrow = weather.tomorrow.max;
-  const minTomorrow = weather.tomorrow.min;
+const { location, unit, today: { max: maxToday, min: minToday }, tomorrow: { max: maxTomorrow, min: minTomorrow } } = weather
 
   return {
     max: (maxToday + maxTomorrow) / 2,
