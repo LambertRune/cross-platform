@@ -550,3 +550,21 @@ let students = [
     gebdate: "18/02/1988"
   }
 ];
+
+// 1. Log all students from class A, showing 'NA' for null scores
+students
+  .filter(student => student.class === "A")
+  .map(student => ({
+    ...student,
+    score: student.score === null ? "NA" : student.score
+  }))
+  .forEach(student => {
+    console.log(
+      `ID: ${student.id}, Name: ${student.firstname} ${student.lastname}, Email: ${student.email}, Class: ${student.class}, Score: ${student.score}, Gebdate: ${student.gebdate}`
+    );
+  });
+
+// 2. Check if any student in class B has a score of 20 (no new variables)
+console.log(
+  students.filter(student => student.class === "B").some(student => student.score === 20)
+);
