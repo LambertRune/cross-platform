@@ -6,11 +6,10 @@ import First from './src/components/List';
 
 export default function App() {
   return (
-    <View style={styles.container}> 
           
         <List />         
               
-    </View>
+    
   );
 }
 
